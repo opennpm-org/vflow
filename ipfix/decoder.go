@@ -382,6 +382,8 @@ func (f *TemplateFieldSpecifier) unmarshal(r *reader.Reader) error {
 		f.EnterpriseNo = 0
 	}
 
+	fmt.Errorf("Unmarshalling %d/%d", f.EnterpriseNo, f.ElementID)
+
 	return nil
 }
 
@@ -516,13 +518,14 @@ func (d *Decoder) decodeData(tr TemplateRecord) ([]DecodedField, error) {
 	r := d.reader
 
 	for i := 0; i < len(tr.ScopeFieldSpecifiers); i++ {
+		fmt.Errorf("Checking for scope %d/%d", tr.ScopeFieldSpecifiers[i].EnterpriseNo, tr.ScopeFieldSpecifiers[i].ElementID)
 		m, ok := InfoModel[ElementKey{
 			tr.ScopeFieldSpecifiers[i].EnterpriseNo,
 			tr.ScopeFieldSpecifiers[i].ElementID,
 		}]
 
 		if !ok {
-			return nil, nonfatalError{fmt.Errorf("IPFIX element key (%d) not exist (scope)",
+			return nil, nonfatalError{fmt.Errorf("IPFIX element key (%d) does not exist (scope)",
 				tr.ScopeFieldSpecifiers[i].ElementID)}
 		}
 
@@ -548,7 +551,8 @@ func (d *Decoder) decodeData(tr TemplateRecord) ([]DecodedField, error) {
 		}]
 
 		if !ok {
-			return nil, nonfatalError{fmt.Errorf("IPFIX element key (%d) not exist",
+			return nil, nonfatalError{fmt.Errorf("IPFIX element key (%d/%d) does not exist",
+				tr.FieldSpecifiers[i].EnterpriseNo,
 				tr.FieldSpecifiers[i].ElementID)}
 		}
 
