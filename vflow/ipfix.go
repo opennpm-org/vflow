@@ -200,6 +200,17 @@ func (i *IPFIX) ipfixWorker(wQuit chan struct{}) {
 		b          []byte
 	)
 
+	const (
+		FORMAT_JSON     int = 1
+		FORMAT_PROTOBUF int = 2
+	)
+
+	outputFormat := FORMAT_JSON
+
+	if opts.IPFIXTopicFormat == "protobuf" {
+		outputFormat = FORMAT_PROTOBUF
+	}
+
 LOOP:
 	for {
 
@@ -243,7 +254,11 @@ LOOP:
 		atomic.AddUint64(&i.stats.DecodedCount, 1)
 
 		if len(decodedMsg.DataSets) > 0 {
-			b, err = decodedMsg.JSONMarshal(buf)
+			if outputFormat == FORMAT_PROTOBUF {
+				b, err = decodedMsg.ProtobufMarshal(buf)
+			} else {
+				b, err = decodedMsg.JSONMarshal(buf)
+			}
 			if err != nil {
 				logger.Println(err)
 				continue

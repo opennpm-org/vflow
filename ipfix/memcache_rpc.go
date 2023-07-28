@@ -69,7 +69,6 @@ type Discovery struct {
 	conn         interface{}
 	group        net.IP
 	port         int
-	rcvdMsg      chan net.IP
 	vFlowServers map[string]vFlowServer
 	mu           sync.RWMutex
 }

@@ -82,6 +82,7 @@ type Options struct {
 	IPFIXUDPSize       int    `yaml:"ipfix-udp-size"`
 	IPFIXWorkers       int    `yaml:"ipfix-workers"`
 	IPFIXTopic         string `yaml:"ipfix-topic"`
+	IPFIXTopicFormat   string `yaml:"ipfix-topic-format"`
 	IPFIXMirrorAddr    string `yaml:"ipfix-mirror-addr"`
 	IPFIXMirrorPort    int    `yaml:"ipfix-mirror-port"`
 	IPFIXMirrorWorkers int    `yaml:"ipfix-mirror-workers"`
@@ -166,6 +167,7 @@ func NewOptions() *Options {
 		IPFIXUDPSize:       1500,
 		IPFIXWorkers:       200,
 		IPFIXTopic:         "vflow.ipfix",
+		IPFIXTopicFormat:   "json",
 		IPFIXMirrorAddr:    "",
 		IPFIXMirrorPort:    4172,
 		IPFIXMirrorWorkers: 5,
@@ -341,6 +343,7 @@ func (opts *Options) flagSet() {
 	flag.IntVar(&opts.IPFIXUDPSize, "ipfix-max-udp-size", opts.IPFIXUDPSize, "IPFIX maximum UDP size")
 	flag.IntVar(&opts.IPFIXWorkers, "ipfix-workers", opts.IPFIXWorkers, "IPFIX workers number")
 	flag.StringVar(&opts.IPFIXTopic, "ipfix-topic", opts.IPFIXTopic, "ipfix topic name")
+	flag.StringVar(&opts.IPFIXTopicFormat, "ipfix-topic-format", opts.IPFIXTopicFormat, "ipfix topic format (json, protobuf)")
 	flag.StringVar(&opts.IPFIXTplCacheFile, "ipfix-tpl-cache-file", opts.IPFIXTplCacheFile, "IPFIX template cache file")
 	flag.StringVar(&opts.IPFIXMirrorAddr, "ipfix-mirror-addr", opts.IPFIXMirrorAddr, "IPFIX mirror destination address")
 	flag.IntVar(&opts.IPFIXMirrorPort, "ipfix-mirror-port", opts.IPFIXMirrorPort, "IPFIX mirror destination port number")

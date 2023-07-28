@@ -98,45 +98,6 @@ func (m *Message) encodeDataSet(b *bytes.Buffer) error {
 	return err
 }
 
-func (m *Message) encodeDataSetFlat(b *bytes.Buffer) error {
-	var (
-		length   int
-		dsLength int
-		err      error
-	)
-
-	b.WriteString("\"DataSets\":")
-	dsLength = len(m.DataSets)
-
-	b.WriteByte('[')
-
-	for i := range m.DataSets {
-		length = len(m.DataSets[i])
-
-		b.WriteByte('{')
-		for j := range m.DataSets[i] {
-			b.WriteByte('"')
-			b.WriteString(strconv.FormatInt(int64(m.DataSets[i][j].ID), 10))
-			b.WriteString("\":")
-			err = m.writeValue(b, i, j)
-
-			if j < length-1 {
-				b.WriteByte(',')
-			} else {
-				b.WriteByte('}')
-			}
-		}
-
-		if i < dsLength-1 {
-			b.WriteString(",")
-		}
-	}
-
-	b.WriteByte(']')
-
-	return err
-}
-
 func (m *Message) encodeHeader(b *bytes.Buffer) {
 	b.WriteString("\"Header\":{\"Version\":")
 	b.WriteString(strconv.FormatInt(int64(m.Header.Version), 10))
