@@ -4,7 +4,7 @@
 // 	protoc        v3.12.4
 // source: vflow.proto
 
-package ipfix
+package producer
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"

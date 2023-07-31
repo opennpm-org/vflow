@@ -184,6 +184,17 @@ func (i *NetflowV9) netflowV9Worker(wQuit chan struct{}) {
 		b          []byte
 	)
 
+	const (
+		FORMAT_JSON     int = 1
+		FORMAT_PROTOBUF int = 2
+	)
+
+	outputFormat := FORMAT_JSON
+
+	if opts.IPFIXTopicFormat == "protobuf" {
+		outputFormat = FORMAT_PROTOBUF
+	}
+
 LOOP:
 	for {
 
@@ -215,7 +226,11 @@ LOOP:
 		atomic.AddUint64(&i.stats.DecodedCount, 1)
 
 		if decodedMsg.DataSets != nil {
-			b, err = decodedMsg.JSONMarshal(buf)
+			if outputFormat == FORMAT_PROTOBUF {
+				b, err = decodedMsg.ProtobufMarshal(buf)
+			} else {
+				b, err = decodedMsg.JSONMarshal(buf)
+			}
 			if err != nil {
 				logger.Println(err)
 				continue
