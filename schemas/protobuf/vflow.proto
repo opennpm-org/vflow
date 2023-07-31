@@ -1,0 +1,19 @@
+syntax = "proto3";
+package producer;
+option go_package = "github.com/opennpm-org/vflow/producer;producer";
+
+message DataSet {
+    uint32 I = 1;
+    string V = 2;
+    uint32 E = 3;
+}
+
+message VFlowMessage {
+    string AgentID = 1;
+    uint32 Version = 2;
+    uint32 Length = 3;
+    uint32 ExportTime = 4;
+    uint32 SequenceNo = 5;
+    uint32 DomainID = 6;
+    repeated DataSet DataSets = 7;
+}

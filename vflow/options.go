@@ -103,6 +103,7 @@ type Options struct {
 	NetflowV9UDPSize      int    `yaml:"netflow9-udp-size"`
 	NetflowV9Workers      int    `yaml:"netflow9-workers"`
 	NetflowV9Topic        string `yaml:"netflow9-topic"`
+	NetflowV9TopicFormat  string `yaml:"netflow9-topic-format"`
 	NetflowV9TplCacheFile string `yaml:"netflow9-tpl-cache-file"`
 
 	// producer
@@ -184,6 +185,7 @@ func NewOptions() *Options {
 		NetflowV9UDPSize:      1500,
 		NetflowV9Workers:      200,
 		NetflowV9Topic:        "vflow.netflow9",
+		NetflowV9TopicFormat:  "json",
 		NetflowV9TplCacheFile: "/tmp/netflowv9.templates",
 
 		ProducerEnabled: true,
@@ -342,8 +344,8 @@ func (opts *Options) flagSet() {
 	flag.StringVar(&opts.IPFIXAddr, "ipfix-addr", opts.IPFIXAddr, "IPFIX IP address to bind to")
 	flag.IntVar(&opts.IPFIXUDPSize, "ipfix-max-udp-size", opts.IPFIXUDPSize, "IPFIX maximum UDP size")
 	flag.IntVar(&opts.IPFIXWorkers, "ipfix-workers", opts.IPFIXWorkers, "IPFIX workers number")
-	flag.StringVar(&opts.IPFIXTopic, "ipfix-topic", opts.IPFIXTopic, "ipfix topic name")
-	flag.StringVar(&opts.IPFIXTopicFormat, "ipfix-topic-format", opts.IPFIXTopicFormat, "ipfix topic format (json, protobuf)")
+	flag.StringVar(&opts.IPFIXTopic, "ipfix-topic", opts.IPFIXTopic, "IPFIX topic name")
+	flag.StringVar(&opts.IPFIXTopicFormat, "ipfix-topic-format", opts.IPFIXTopicFormat, "IPFIX topic format (json, protobuf)")
 	flag.StringVar(&opts.IPFIXTplCacheFile, "ipfix-tpl-cache-file", opts.IPFIXTplCacheFile, "IPFIX template cache file")
 	flag.StringVar(&opts.IPFIXMirrorAddr, "ipfix-mirror-addr", opts.IPFIXMirrorAddr, "IPFIX mirror destination address")
 	flag.IntVar(&opts.IPFIXMirrorPort, "ipfix-mirror-port", opts.IPFIXMirrorPort, "IPFIX mirror destination port number")
@@ -364,6 +366,7 @@ func (opts *Options) flagSet() {
 	flag.IntVar(&opts.NetflowV9UDPSize, "netflow9-max-udp-size", opts.NetflowV9UDPSize, "Netflow version 9 maximum UDP size")
 	flag.IntVar(&opts.NetflowV9Workers, "netflow9-workers", opts.NetflowV9Workers, "Netflow version 9 workers number")
 	flag.StringVar(&opts.NetflowV9Topic, "netflow9-topic", opts.NetflowV9Topic, "Netflow version 9 topic name")
+	flag.StringVar(&opts.NetflowV9TopicFormat, "netflow9-topic-format", opts.NetflowV9TopicFormat, "Netflow version 9 topic format (json, protobuf)")
 	flag.StringVar(&opts.NetflowV9TplCacheFile, "netflow9-tpl-cache-file", opts.NetflowV9TplCacheFile, "Netflow version 9 template cache file")
 
 	// producer options

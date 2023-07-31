@@ -191,7 +191,7 @@ func (i *NetflowV9) netflowV9Worker(wQuit chan struct{}) {
 
 	outputFormat := FORMAT_JSON
 
-	if opts.IPFIXTopicFormat == "protobuf" {
+	if opts.NetflowV9TopicFormat == "protobuf" {
 		outputFormat = FORMAT_PROTOBUF
 	}
 
