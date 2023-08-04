@@ -4,7 +4,7 @@ option go_package = "github.com/opennpm-org/vflow/producer;producer";
 
 message DataSet {
     uint32 I = 1;
-    string V = 2;
+    bytes  V = 2;
     uint32 E = 3;
 }
 

@@ -28,6 +28,7 @@ import (
 	"fmt"
 	"io"
 	"net"
+	"time"
 
 	"github.com/EdgeCast/vflow/ipfix"
 	"github.com/EdgeCast/vflow/reader"
@@ -127,6 +128,8 @@ func (h *PacketHeader) unmarshal(r *reader.Reader) error {
 	if h.UNIXSecs, err = r.Uint32(); err != nil {
 		return err
 	}
+
+	h.UNIXSecs = uint32(time.Now().Unix())
 
 	if h.SeqNum, err = r.Uint32(); err != nil {
 		return err

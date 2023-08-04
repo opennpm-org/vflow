@@ -63,7 +63,7 @@ func (m *Message) encodeDataSetFlatProto(vm *producer.VFlowMessage) error {
 			ds.I = uint32(d.ID)
 			var b bytes.Buffer
 			m.writeValueProto(&b, i, j)
-			ds.V = b.String()
+			ds.V = b.Bytes()
 			vm.DataSets = append(vm.DataSets, &ds)
 		}
 
@@ -116,7 +116,7 @@ func (m *Message) writeValueProto(b *bytes.Buffer, i, j int) error {
 	case net.HardwareAddr:
 		b.WriteString(m.DataSets[i][j].Value.(net.HardwareAddr).String())
 	case []uint8:
-		b.WriteString("0x" + hex.EncodeToString(m.DataSets[i][j].Value.([]uint8)))
+		b.WriteString(hex.EncodeToString(m.DataSets[i][j].Value.([]uint8)))
 	default:
 		return errUknownMarshalDataType
 	}
